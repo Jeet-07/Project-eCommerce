@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<body><article>
+<div th:fragment="header_menu">
+	<nav th:fragment="menu" class="navbar navbar-expand-lg" style="background-color: #80ced6;">
+		<div class="container-fluid">
+			<a class="navbar-brand" th:href="@{/}">
+				<img th:src="@{/images/logo.png}" height="55">
+			</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<th:block sec:authorize="!isAuthenticated()">
+				<div class="collapse navbar-collapse" id="topNavbar">
+					<ul class="navbar-nav me-auto">
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/login}">Login</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/register}">Register</a>
+							</li>
+					</ul>
+				</div>
+			</th:block>
+			<th:block sec:authorize="isAuthenticated()">
+				<div class="collapse navbar-collapse" id="topNavbar">
+					<ul class="navbar-nav me-auto">
+						<form class="nav-item row g-2" th:action="@{/search}" method="get">
+							<div class="col-auto">
+								<input type="search" name="keyword" class="form-control" th:value="${searchKeyword}" placeholder="Search Products" required />
+							</div>
+							<div class="col-auto">
+								<button type="submit" class="btn btn-secondary"><i class="fa fa-search"></i></button>
+							</div>
+						</form>
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/address_book}">Address Book</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" href="">Questions</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/reviews}">Reviews</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/orders}">Orders</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link fas fa-shopping-cart fa-2x" th:href="@{/cart}"></a>
+							</li>
+					</ul>
+					<ul class="navbar-nav ms-auto">
+						<li class="nav-item"><i class="fa fa-user fa-2x icon-white m-1"></i></li>
+						<li class="nav-item dropdown" >
+							<a class="nav-link text-white dropdown-toggle m-1" data-bs-toggle="dropdown" sec:authentication="principal.fullName"  ></a>
+							<div class="dropdown-menu">
+								<div>
+									<a class="dropdown-item" th:href="@{/account_details}">Account Details</a>
+								</div>
+								<form th:action="@{/logout}" method="post" >
+									<input type="submit" value="Logout" class="dropdown-item"/>
+								</form>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</th:block>
+	</nav>
+</div>
+
+</article>
+<footer th:fragment="footer_menu">
+	<div>
+		<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#bottomNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="bottomNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="">About Us</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Privacy Notice</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="">Returns &amp; Refunds</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</div>
+	<div th:fragment="footer" class="text-center m-3">
+		<p>[[${COPYRIGHT}]]</p>
+	</div>
+</footer>
+</body>
+</html>

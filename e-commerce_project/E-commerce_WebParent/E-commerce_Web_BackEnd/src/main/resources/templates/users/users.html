@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments::page_head('Users - Admin')}">
+</head>
+<body><article>
+<div class="container-fuild">
+	<nav th:replace="~{navigation::menu}">
+	</nav>
+</div>
+<div class="container-fluid">
+	<div th:replace="~{fragments::create_export_message('Users')}">
+	</div>
+
+	<div th:replace="~{fragments::search_form}">
+	</div>
+
+	<div class="table-responsive container-fluid mt-2">
+		<table class="table table-bordered table-hover table-responsive-xl">
+			<thead class="table-dark">
+			<tr>
+				<th th:replace="~{fragments :: column_link('id','User ID')}"/>
+				<th>Picture</th>
+				<th th:replace="~{fragments :: column_link('email','Email')}"/>
+				<th th:replace="~{fragments :: column_link('firstName','First Name')}"/>
+				<th th:replace="~{fragments :: column_link('lastName','Last Name')}"/>
+				<th>Roles</th>
+				<th th:replace="~{fragments :: column_link('enabled','Enabled')}"/>
+				<th>Action</th>
+			</tr>
+			</thead>
+			<tbody >
+			<tr th:each="user:${usersList}">
+				<td>[[${user.id}]]</td>
+				<td><img alt="Photo Preview" th:src="@{${user.photoPath}}" width="50"/></td>
+				<td>[[${user.email}]]</td>
+				<td>[[${user.firstName}]]</td>
+				<td>[[${user.lastName}]]</td>
+				<td>[[${user.roles}]]</td>
+				<td>
+					<div th:replace="~{fragments::status(${user.enabled},'/users/'+${user.id},'user')}"/>
+				</td>
+				<td><div th:replace="~{fragments :: edit('user','/users/edit/' + ${user.id})}" />
+					&nbsp; &nbsp;
+					<div th:replace="~{fragments :: delete('user', ${user.id}, '/users/delete/' + ${user.id}, true)}" />
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div th:replace="~{modal_fragments::confirm_modal}">
+	</div>
+
+	<div th:replace="~{fragments::pagination('Users')}">
+	</div>
+</div>
+
+
+</article>
+<footer th:replace="~{fragments::footer}"></footer>
+
+<script type="text/javascript">
+	moduleURL = "[[@{/users}]]";
+
+	$(document).ready(function() {
+		$(".link-delete").on("click", function(e) {
+			e.preventDefault();
+			showDeleteConfirmModal($(this), 'user');
+		});
+	});
+</script>
+
+</body>
+</html>

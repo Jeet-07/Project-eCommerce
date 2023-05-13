@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body><article>
+<div th:fragment="content" th:remove="tag">
+	<div>
+		<p>
+			Use this page to manage countries which will be displayed in the customer registration form.
+			Click Load Country List first.
+		</p>
+	</div>
+
+	<div class="mt-2">
+		<input type="button" value="Load Country List" id="buttonLoadCountries" class="btn btn-primary m-2" />
+	</div>
+	<div class="m-2">
+		<div class="toast toast-country" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="3000">
+			<div class="toast-body">
+				<span id="toastCountriesMessage"></span>
+			</div>
+		</div>
+	</div>
+
+	<div>
+		<select class="form-control m-2" style="height: 300px" size="3" id="dropDownCountries">
+		</select>
+	</div>
+	
+	<form id="formCountry">
+	<div class="form-group text-center">
+		<div class="row mt-2">
+			<div class="col">
+				<label class="form-label" id="labelCountryName">Country Name:</label>
+				<div >
+					<input type="text" class="form-control" id="fieldCountryName" required minlength="3" maxlength="45" />
+				</div>
+			</div>
+			<div class="col">
+				<label class="form-label">Code:</label>
+				<div >
+					<input type="text" class="form-control" id="fieldCountryCode" required minlength="2" maxlength="3" />
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2 ">
+			<div class="col">
+				<input type="button" id="buttonAddCountry" value="New" class="btn btn-secondary" />
+				<input type="button" id="buttonUpdateCountry" value="Update" class="btn btn-secondary" disabled="disabled" />
+				<input type="button" id="buttonDeleteCountry" value="Delete" class="btn btn-secondary" disabled="disabled" />
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+</article></body>
+</html>

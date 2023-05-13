@@ -1,0 +1,14 @@
+*.icon-white{color:white}
+*.icon-silver{color:silver}
+*.icon-dark{color:dimgray}
+*.icon-gray{color:gray}
+*.icon-limegreen{color:limegreen}
+*.icon-green{color:green}
+*.icon-red{color:red}
+*.icon-blue{color:blue}
+*.nav-blue{color:#80ced6}
+
+body{ min-height: 100vh; margin:0; }
+body{ display:flex; flex-direction:column; }
+article{ flex:1; }
+footer{ min-height:50px; background:PapayaWhip; }

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments::page_head('Categories - Admin')}">
+</head>
+<body><article>
+	<div class="container-fuild">
+		<nav th:replace="~{navigation::menu}">
+		</nav>
+	</div>
+	<div class="container-fluid">
+		<div th:replace="~{fragments::create_export_message('Categories')}">
+		</div>
+
+		<div th:replace="~{fragments::search_form}">
+		</div>
+
+		<div class="table-responsive container-fluid mt-2">
+			<table class="table table-bordered table-hover table-responsive-xl">
+				<thead class="table-dark">
+					<tr>
+						<th>ID</th>
+						<th>Image</th>
+						<th>Name</th>
+						<th>Alias</th>
+						<th>Enabled</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody >
+					<tr th:each="category:${categoryList}">
+						<td>[[${category.id}]]</td>
+						<td><img alt="Photo Preview" th:src="@{${category.imagePath}}" width="50"/></td>
+						<td>
+							<span th:if="${category.hierarchicalName != null}">[[${category.hierarchicalName}]]</span>
+							<span th:if="${category.hierarchicalName == null}">[[${category.name}]]</span>
+						</td>
+						<td>[[${category.alias}]]</td>
+						<td>
+							<a th:if="${category.enabled==true}" th:href="@{'/categories/'+${category.id}+'/enabled/false'}" title="Disable category">
+								<i class="fa fa-check-circle fa-2x icon-blue"></i>
+							</a>
+							<a th:if="${category.enabled==false}" th:href="@{'/categories/'+${category.id}+'/enabled/true'}" title="Enable category">
+							<i class="fa fa-check-circle fa-2x icon-dark"></i>
+							</a>
+						</td>
+						<td>
+							<div class="row">
+								<div class="col-sm">
+									<a th:href="@{'/categories/edit/'+${category.id}}" title="Edit this category"><i class="fa fa-edit fa-2x icon-limegreen"></i></a>
+								</div>
+								<div class="col-sm">
+									<div th:replace="~{fragments :: delete('category', ${category.id}, '/categories/delete/' + ${category.id}, ${!category.hasChildren})}" />
+								</div>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div th:replace="~{modal_fragments::confirm_modal}">
+		</div>
+
+		<div class="container text-center mb-3" th:unless="${itemShown > 0}"><span>No Categories Found.</span></div>
+
+		<div th:if="${totalPages > 0}" class="container">
+			<nav >
+				<ul class="pagination justify-content-center">
+					<li th:class="${currPage > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/categories/page/'+${pageNum}+${keyword == null ? '':'?keyword='+keyword}}">First</a></li>
+					<li th:class="${currPage > 1 ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/categories/page/'+${currPage-1}+${keyword == null ? '':'?keyword='+keyword}}">Previous</a></li>
+					<li th:class="${currPage != i ? 'page-item':'page-item active'}" th:each="i:${#numbers.sequence(1,totalPages)}"><a class="page-link" th:href="@{'/categories/page/'+${i}+${keyword == null ? '':'?keyword='+keyword}}">[[${i}]]</a></li>
+					<li th:class="${currPage < totalPages ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/categories/page/'+${currPage+1}+${keyword == null ? '':'?keyword='+keyword}}">Next</a></li>
+					<li th:class="${currPage < totalPages ? 'page-item':'page-item disabled'}"><a class="page-link" th:href="@{'/categories/page/'+${totalPages}+${keyword == null ? '':'?keyword='+keyword}}">Last</a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
+</article>
+<footer th:replace="~{fragments::footer}"></footer>
+<script type="text/javascript">
+		moduleURL = "[[@{/categories}]]";
+
+		$(document).ready(function() {
+			$(".link-delete").on("click", function(e) {
+				e.preventDefault();
+				showDeleteConfirmModal($(this), 'category');
+			});
+		});
+	</script>
+</body>
+</html>

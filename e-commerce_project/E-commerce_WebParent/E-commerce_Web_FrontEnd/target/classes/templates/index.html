@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: page_head('Home', 'none')}" />
+<body><article>
+<div th:replace="~{navigation :: header_menu}"></div>
+<div class="container-fluid">
+	<div class="container-fluid mt-2 mb-3">
+		<h1>Shopping by Categories</h1>
+	</div>
+
+	<div class="container-fluid mb-3 mt-2">
+	<div class="row">
+		<th:block th:each="cat : ${listCategories}">
+			<div class="col">
+				<div class="card text-center m-2 border-0" style="width: 10rem;">
+					<div class="text-center">
+						<img th:src="@{${cat.imagePath}}" width="100" />
+					</div>
+					<div class="card-body">
+						<a class="card-title" th:href="@{'/c/' + ${cat.alias}}">[[${cat.name}]]</a>
+					</div>
+				</div>
+			</div>
+		</th:block>
+	</div>
+	</div>
+</div>
+</body>
+</article><footer th:replace="~{navigation::footer_menu}"></footer>
+</html>

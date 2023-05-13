@@ -1,0 +1,23 @@
+server:
+  port: 80
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: Manjeet
+    password: 2601
+    url: jdbc:mysql://localhost:3306/ecommerce
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 556549763257-pflddre7f0h12nt7uh3sk18ohtsdl15q.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile

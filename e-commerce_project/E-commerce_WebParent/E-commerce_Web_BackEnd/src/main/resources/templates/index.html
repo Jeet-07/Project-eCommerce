@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head th:replace="~{fragments::page_head('Home - Admin')}">
+</head>
+<body><article>
+	<div class="container-fuild">
+		<nav th:replace="~{navigation::menu}">
+		</nav>
+	</div>
+	<div class="container-fluid">
+		<div>
+			<h2>Welcome
+			<a th:href="@{/account}"
+				sec:authentication="principal.fullname"></a>
+			&nbsp;
+			<span sec:authentication="principal.authorities"></span>
+			</h2>
+		</div>
+
+		<div class="row">
+			<th:block sec:authorize="hasAuthority('Admin')">
+			<div class="col">
+				<div class="card m-2" style="width: 18rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">General Information</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Site Name : <b>[[${SITE_NAME}]]</b><br>
+							Currency : <b>[[${CURRENCY_SYMBOL}]]</b><br>
+							Decimal Point Type : <b>[[${DECIMAL_POINT_TYPE}]]</b><br>
+							Decimal Digits : <b>[[${DECIMAL_DIGITS}]]</b><br>
+							Thousands Point Type  : <b>[[${THOUSANDS_POINT_TYPE}]]</b>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Settings</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Countries : <b>[[${totalCountry}]]</b><br>
+							<a th:href="@{/settings#countries}">Manage Countries</a><br>
+							States : <b>[[${totalState}]]</b><br>
+							<a th:href="@{/settings#states}">Manage States</a><br>
+							Mail Server : <b>[[${MAIL_SERVER}]]</b><br>
+							<a th:href="@{/settings#mailServer}">Configure Mail Setting</a></p>
+					</div>
+				</div>
+			</div>
+
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Users : [[${totalUsers}]]</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Enabled: <b>[[${totalEnabledUsers}]]</b><br>
+							Disabled: <b>[[${totalUsers - totalEnabledUsers}]]</b><br>
+							<a th:href="@{/users/new}">Add new</a><br>
+							<a th:href="@{/users}">View all</a></p>
+					</div>
+				</div>
+			</div>
+			</th:block>
+			<th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Categories : [[${totalCategories}]]</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Enabled: <b>[[${totalEnabledCategories}]]</b><br>
+							Disabled: <b>[[${totalCategories - totalEnabledCategories}]]</b><br>
+							<a th:href="@{/categories/new}">Add new</a><br>
+							<a th:href="@{/categories}">View all</a></p>
+					</div>
+				</div>
+			</div>
+			</th:block>
+			<th:block sec:authorize="hasAnyAuthority('Admin','Editor')">
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Brands : [[${totalUsers}]]</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	<a th:href="@{/brands/new}">Add new</a><br>
+							<a th:href="@{/brands}">View all</a></p>
+					</div>
+				</div>
+			</div>
+			</th:block>
+			<th:block sec:authorize="hasAnyAuthority('Admin','Salesperson','Editor','Shipper')">
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Products : [[${totalProducts}]]</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Enabled: <b>[[${totalEnabledProducts}]]</b><br>
+							Disabled: <b>[[${totalProducts - totalEnabledProducts}]]</b><br>
+							<a th:href="@{/products/new}">Add new</a><br>
+							<a th:href="@{/products}">View all</a></p>
+					</div>
+				</div>
+			</div>
+			</th:block>
+			<th:block sec:authorize="hasAnyAuthority('Admin','Salesperson')">
+			<div class="col">
+				<div class="card m-2" style="width: 14rem;">
+					<div class="card-header text-center">
+						<h5 class="card-title">Customers : [[${totalCustomers}]]</h5>
+					</div>
+					<div class="card-body text-center">
+						<p>	Enabled: <b>[[${totalEnabledCustomers}]]</b><br>
+							Disabled: <b>[[${totalCustomers - totalEnabledCustomers}]]</b><br>
+							<a th:href="@{/customers}">View all</a></p>
+					</div>
+				</div>
+			</div>
+			</th:block>
+		</div>
+	</div>
+</article>
+<footer th:replace="~{fragments::footer}"></footer>
+</body>
+</html>

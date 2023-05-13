@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<body><article>
+<div th:fragment="content" th:remove="tag">
+	<div class="container m-2">
+		<label>Short Description:</label>
+		<div th:utext="${product.shortDescription}" class="border p-2 m-2"></div>
+	</div>
+	
+	<div class="container m-2">
+		<label>Full Description:</label>
+		<div th:utext="${product.fullDescription}" class="border p-2 m-2"></div>
+	</div>	
+</div>		
+</article></body>
+</html>

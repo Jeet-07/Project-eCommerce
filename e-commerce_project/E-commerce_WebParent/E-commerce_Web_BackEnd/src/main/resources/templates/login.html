@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: page_head('Project eCommerce - Admin')}" />
+<body><article>
+<nav class="navbar navbar-expand-lg" style="background-color: #80ced6;">
+	<div class="container-fluid">
+		<a class="navbar-brand" th:href="@{/}">
+			<img th:src="@{/images/logo.png}" height="55">
+		</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="topNavbar">
+			<ul class="navbar-nav me-auto">
+				<li class="nav-item">
+					<h4>Project eCommerce</h4>
+				</li>
+			</ul>
+		</div>
+	</div>
+</nav>
+
+<div class="container text-center">
+	<div class="mt-2">
+		<h2>Admin Login</h2>
+	</div>
+
+
+	<form th:action="@{/login}" method="post" style="max-width: 350px; margin: 0 auto">
+		<div th:if="${param.error}">
+			<p class="text-danger">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+		</div>
+		<div th:if="${param.logout}">
+			<p class="text-warning">You have been logged out.</p>
+		</div>
+
+		<div class="border border-secondary rounded p-3">
+			<p>
+				<input type="email" name="username" class="form-control" placeholder="E-mail" required />
+			</p>
+			<p>
+				<input type="password" name="password" class="form-control" placeholder="Password" required />
+			</p>
+			<p>
+				<input type="checkbox" name="remember-me" />&nbsp;Remember Me
+			</p>
+			<p>
+				<input type="submit" value="Login" class="btn btn-primary" />
+			</p>
+		</div>
+	</form>
+</div>
+</article>
+<footer th:replace="~{fragments::footer}"></footer></body>
+</html>

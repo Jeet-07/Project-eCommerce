@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments :: page_head('Shipping Rates - Admin')}" />
+<body><article>
+<div class="container-fluid">
+	<div th:replace="~{navigation :: menu}"></div>
+	<div>
+		<h2>Manage Shipping Rates</h2>
+		<a th:href="@{/shipping_rates/new}" class="fa fa-folder-plus fa-2x icon-dark mr-2"></a>
+	</div>
+	<div th:if="${message != null}" class="alert alert-success text-center mt-2">
+		[[${message}]]
+	</div>
+	<div th:replace="~{fragments :: search_form}" />
+
+	<div class="table-responsive container-fluid mt-2">
+		<table class="table table-bordered table-hover table-responsive-xl">
+			<thead class="table-dark">
+				<tr>
+					<th th:replace="~{fragments :: column_link('id', 'ID')}" />
+					<th th:replace="~{fragments :: column_link('country', 'Country')}" />
+					<th th:replace="~{fragments :: column_link('state', 'State')}" />
+					<th th:replace="~{fragments :: column_link('rate', 'Rate')}" />
+					<th th:replace="~{fragments :: column_link('days', 'Days')}" />
+					<th th:replace="~{fragments :: column_link('codSupported', 'COD Supported')}" />
+					<th>Action</th>
+				</tr>								
+			</thead>
+			<tbody>
+				<tr th:each="rate : ${shippingRates}">
+					<td>[[${rate.id}]]</td>
+					<td>[[${rate.country.name}]]</td>
+					<td>[[${rate.state}]]</td>
+					<td>[[${rate.rate}]]</td>
+					<td>[[${rate.days}]]</td>
+					<td>
+						<div th:replace="~{shipping_rates/shipping_rates_fragment :: cod_support}" />
+					</td>
+					<td>
+						<div th:replace="~{fragments :: edit('shipping rate', '/shipping_rates/edit/' + ${rate.id})}" />
+						&nbsp; 
+						<div th:replace="~{fragments :: delete('shipping rate', ${rate.id}, '/shipping_rates/delete/' + ${rate.id}, true)}" />
+					</td>					
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	
+	<div th:replace="~{fragments :: pagination('shipping rates')}"></div>
+	<div th:replace="~{modal_fragments :: confirm_modal}" />
+
+</div>
+</article>
+<footer th:replace="~{fragments::footer}"></footer>
+
+<script th:src="@{/js/common_list.js}"></script>
+<script type="text/javascript">
+	moduleURL = "[[@{/shipping_rates}]]";
+
+	$(document).ready(function() {
+		$(".link-delete").on("click", function(e) {
+			e.preventDefault();
+			showDeleteConfirmModal($(this), 'shipping rate');
+		});
+	});
+</script>
+</body>
+</html>
